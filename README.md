@@ -1,4 +1,6 @@
-# 🌿 Plant Leaf Disease Detection & Explainable AI System
+# 🌿 Plant Disease Detector
+
+> **Plant Leaf Disease Detection & Explainable AI System**
 
 A simple, fast, and accurate Deep Learning project that detects plant leaf diseases from photographs, provides treatment remedies, and visually explains the diagnosis using AI heatmaps (Grad-CAM).
 
@@ -71,7 +73,7 @@ This project is trained and evaluated on the **PlantVillage Dataset**, containin
 ## 📁 5. Project Folder Structure
 
 ```
-plant_disease_new/
+plant-disease-detector/
 ├── frontend/               # Modern React + Vite Web UI
 │   ├── src/
 │   │   ├── App.jsx         # Main UI component (Upload, Grad-CAM toggle, Remedies)
@@ -104,14 +106,82 @@ plant_disease_new/
 
 ## 🚀 6. Step-by-Step Setup & Running Guide
 
-### Step 1: Open Terminal in Project Folder
+### Prerequisites
+Make sure you have the following installed on your system:
+- **Python:** 3.9, 3.10, or 3.11 ([Download Python](https://www.python.org/downloads/))
+- **Node.js & npm:** Node.js 18+ ([Download Node.js](https://nodejs.org/))
+- **Git:** ([Download Git](https://git-scm.com/))
+
+---
+
+### Step 1: Clone the Repository & Navigate to Project Directory
 ```bash
-cd plant_disease_new
+git clone https://github.com/jazz93900/plant-disease-detector.git
+cd plant-disease-detector
 ```
 
-### Step 2: Install Python Libraries
+---
+
+### Step 2: Create a Python Virtual Environment
+Creating an isolated virtual environment keeps dependencies contained and avoids version conflicts with other projects:
+
 ```bash
+# Windows (PowerShell or Command Prompt)
+python -m venv venv
+
+# macOS / Linux
+python3 -m venv venv
+```
+
+---
+
+### Step 3: Activate the Virtual Environment
+
+- **Windows (PowerShell):**
+  ```powershell
+  .\venv\Scripts\Activate.ps1
+  ```
+  > **Tip (PowerShell):** If you receive a script execution policy error (`running scripts is disabled on this system`), enable local scripts by running:
+  > ```powershell
+  > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+  > ```
+  > Then run `.\venv\Scripts\Activate.ps1` again.
+
+- **Windows (Command Prompt - cmd.exe):**
+  ```cmd
+  venv\Scripts\activate.bat
+  ```
+
+- **macOS / Linux (Bash / Zsh):**
+  ```bash
+  source venv/bin/activate
+  ```
+
+*(Once activated, you will see `(venv)` at the beginning of your terminal command prompt.)*
+
+---
+
+### Step 4: Upgrade pip & Install Python Dependencies
+```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
+```
+
+---
+
+### Step 5: Install Frontend Dependencies (React UI)
+```bash
+cd frontend
+npm install
+cd ..
+```
+
+---
+
+### Step 6: Verify the Installation (Optional)
+Check that the environment and CLI tools are working:
+```bash
+python run.py --help
 ```
 
 ---
@@ -130,7 +200,6 @@ python run.py api --port 8000
 ### Step 2: Start the React Frontend (Terminal 2)
 ```bash
 cd frontend
-npm install
 npm run dev
 ```
 Open your browser and navigate to:
@@ -151,9 +220,8 @@ Open your browser and navigate to:
 
 ## 🌐 8. REST API Inference Server
 
-The project includes a production-ready **FastAPI** inference endpoint. This allows mobile apps, IoT edge devices, or third-party clients to query predictions:
+The project includes a production-ready **FastAPI** inference endpoint. If the server is not already running from Section 7, start it with:
 
-### Start the API Server:
 ```bash
 python run.py api --port 8000
 ```
