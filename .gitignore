@@ -1,0 +1,35 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+
+# Node / React Frontend
+**/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Matplotlib & System Cache
+.mplconfig/
+Thumbs.db
+.DS_Store
+
+# Large Datasets (Do NOT commit 20,000+ raw images to GitHub)
+data/raw/
+data/processed/
+*.zip
+*.tar.gz
+
+# Model Checkpoints
+# Ignore heavy or duplicate checkpoints; keep lightweight mobilenet_v3_best.pth (~13MB)
+checkpoints/custom_cnn_best.pth
+checkpoints/best_model.pth

@@ -1,0 +1,47 @@
+{
+  "arch": "custom_cnn",
+  "class_names": [
+    "Apple___Apple_scab",
+    "Apple___Black_rot",
+    "Apple___Cedar_apple_rust",
+    "Apple___healthy",
+    "Corn___Cercospora_leaf_spot",
+    "Corn___Common_rust",
+    "Corn___healthy",
+    "Corn___Northern_Leaf_Blight",
+    "Potato___Early_blight",
+    "Potato___healthy",
+    "Potato___Late_blight",
+    "Tomato___Bacterial_spot",
+    "Tomato___Early_blight",
+    "Tomato___healthy",
+    "Tomato___Late_blight",
+    "Tomato___Leaf_Mold"
+  ],
+  "num_classes": 16,
+  "best_val_acc": 0.10714285714285714,
+  "best_val_loss": 2.623630557741438,
+  "epochs_trained": 3,
+  "history": {
+    "train_loss": [
+      2.814818354213939,
+      2.6017822097329533,
+      2.4952960154589485
+    ],
+    "train_acc": [
+      0.07352941176470588,
+      0.125,
+      0.13970588235294118
+    ],
+    "val_loss": [
+      2.8279784406934465,
+      2.64326548576355,
+      2.623630557741438
+    ],
+    "val_acc": [
+      0.03571428571428571,
+      0.10714285714285714,
+      0.10714285714285714
+    ]
+  }
+}
