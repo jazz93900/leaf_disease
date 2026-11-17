@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "Plant Disease Detector",
+    "slug": "plant-disease-detector-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#10b981"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow Plant Disease Detector to access your camera to photograph leaves for instant disease diagnosis.",
+        "NSPhotoLibraryUsageDescription": "Allow Plant Disease Detector to access your photo gallery to select plant leaf specimens.",
+        "NSLocationWhenInUseUsageDescription": "Allow Plant Disease Detector to access your GPS location to fetch real-time localized agro-weather and foliar disease outbreak risks."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#10b981",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_MEDIA_IMAGES",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you select plant leaves for diagnosis.",
+          "cameraPermission": "The app accesses your camera to photograph leaves in the field."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "The app accesses your location to fetch agricultural weather and calculate fungal disease risks."
+        }
+      ]
+    ]
+  }
+}

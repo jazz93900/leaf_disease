@@ -13,6 +13,27 @@ from pathlib import Path
 import sys
 import subprocess
 
+# Self-diagnostic check for PyTorch and Virtual Environment
+try:
+    import torch
+except ImportError:
+    venv_dir = Path(__file__).resolve().parent / ".venv"
+    print("\n" + "=" * 65)
+    print("❌ ERROR: 'torch' is not installed in your active Python interpreter.")
+    print(f"   Current Python: {sys.executable}")
+    if venv_dir.exists():
+        print("\n💡 A virtual environment was detected at:")
+        print(f"   {venv_dir}")
+        print("\n👉 Please activate the virtual environment and re-run:")
+        print("   In PowerShell:     .\\.venv\\Scripts\\Activate.ps1")
+        print("   In Command Prompt: .\\.venv\\Scripts\\activate.bat")
+        print("   Or run directly:   .\\.venv\\Scripts\\python.exe run.py api --port 8000")
+    else:
+        print("\n👉 Please install dependencies using:")
+        print("   pip install -r requirements.txt")
+    print("=" * 65 + "\n")
+    sys.exit(1)
+
 from src.config import (
     CHECKPOINT_DIR,
     SAMPLES_DIR,
@@ -171,8 +192,10 @@ def cmd_app(args):
 
 def cmd_api(args):
     import uvicorn
-    print(f"Starting FastAPI Inference Server at http://{args.host}:{args.port}...")
-    print(f"Interactive Swagger Documentation available at http://{args.host}:{args.port}/docs")
+    print(f"\n🌱 Starting FastAPI Inference Server on all interfaces (0.0.0.0:{args.port})...")
+    print(f"  💻 Local Computer:     http://127.0.0.1:{args.port}")
+    print(f"  📱 Mobile Phone Wi-Fi: http://192.168.0.10:{args.port}")
+    print(f"  📖 Swagger UI Docs:    http://127.0.0.1:{args.port}/docs\n")
     uvicorn.run("app.api:app", host=args.host, port=args.port, reload=args.reload)
 
 
@@ -190,7 +213,7 @@ def main():
 
     # api
     p_api = subparsers.add_parser("api", help="Launch FastAPI REST Inference Server")
-    p_api.add_argument("--host", default="127.0.0.1", help="Host interface")
+    p_api.add_argument("--host", default="0.0.0.0", help="Host interface")
     p_api.add_argument("--port", type=int, default=8000, help="Port number")
     p_api.add_argument("--reload", action="store_true", help="Enable live auto-reload")
     p_api.set_defaults(func=cmd_api)
