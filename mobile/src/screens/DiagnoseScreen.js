@@ -96,9 +96,8 @@ export default function DiagnoseScreen({ navigation }) {
 
       const pickerResult = await ImagePicker.launchCameraAsync({
         mediaTypes: ['images'],
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 0.8,
+        allowsEditing: false, // Keep whole leaf without forcing a square crop
+        quality: 0.85,
       });
 
       if (!pickerResult.canceled && pickerResult.assets && pickerResult.assets.length > 0) {
@@ -124,9 +123,8 @@ export default function DiagnoseScreen({ navigation }) {
 
       const pickerResult = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ['images'],
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 0.8,
+        allowsEditing: false, // Keep whole leaf without forcing a square crop
+        quality: 0.85,
       });
 
       if (!pickerResult.canceled && pickerResult.assets && pickerResult.assets.length > 0) {
@@ -518,7 +516,7 @@ export default function DiagnoseScreen({ navigation }) {
               <Image
                 source={{ uri: `data:image/jpeg;base64,${latestDiagnosis.gradcam_heatmap_base64}` }}
                 style={styles.leafImage}
-                resizeMode="cover"
+                resizeMode="contain"
               />
             ) : (
               <Image
@@ -529,9 +527,14 @@ export default function DiagnoseScreen({ navigation }) {
                     'https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=500',
                 }}
                 style={styles.leafImage}
-                resizeMode="cover"
+                resizeMode="contain"
               />
             )}
+            <View style={styles.frameBadge}>
+              <Text style={styles.frameBadgeText}>
+                {viewMode === 'heatmap' ? '🔥 Grad-CAM Heatmap (Full View)' : '🍃 Whole Leaf View'}
+              </Text>
+            </View>
           </View>
 
           {/* Toggle View Mode Button */}
@@ -1119,14 +1122,34 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: 240,
+    height: 220,
     borderRadius: 10,
     overflow: 'hidden',
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#090d16',
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 4,
   },
   leafImage: {
     width: '100%',
     height: '100%',
+  },
+  frameBadge: {
+    position: 'absolute',
+    bottom: 8,
+    right: 8,
+    backgroundColor: 'rgba(15, 23, 42, 0.8)',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+    borderWidth: 0.5,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  frameBadgeText: {
+    color: '#e2e8f0',
+    fontSize: 10,
+    fontWeight: '600',
   },
   toggleRow: {
     flexDirection: 'row',

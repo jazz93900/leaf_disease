@@ -338,7 +338,7 @@ export default function App() {
                     className={`tab-btn ${activeTab === 'gradcam' ? 'active' : ''}`}
                     onClick={() => setActiveTab('gradcam')}
                   >
-                    🔥 Grad-CAM Heatmap (XAI)
+                    🔥 Grad-CAM Heatmap
                   </button>
                   <button
                     className={`tab-btn ${activeTab === 'original' ? 'active' : ''}`}
@@ -346,20 +346,45 @@ export default function App() {
                   >
                     📷 Original Leaf
                   </button>
+                  <button
+                    className={`tab-btn ${activeTab === 'split' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('split')}
+                  >
+                    🔲 Side-by-Side Comparison
+                  </button>
                 </div>
               )}
 
               {/* Image Display */}
-              <div className="image-viewer">
-                {activeTab === 'gradcam' && results.gradcam_heatmap_base64 ? (
-                  <img
-                    src={`data:image/jpeg;base64,${results.gradcam_heatmap_base64}`}
-                    alt="Grad-CAM Activation"
-                  />
-                ) : (
-                  <img src={previewUrl} alt="Original Leaf" />
-                )}
-              </div>
+              {activeTab === 'split' && results.gradcam_heatmap_base64 ? (
+                <div className="image-viewer-split">
+                  <div className="split-pane">
+                    <span className="split-label">📷 Original Leaf</span>
+                    <img src={previewUrl} alt="Original Leaf" />
+                  </div>
+                  <div className="split-pane">
+                    <span className="split-label">🔥 Grad-CAM Heatmap</span>
+                    <img
+                      src={`data:image/jpeg;base64,${results.gradcam_heatmap_base64}`}
+                      alt="Grad-CAM Activation"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="image-viewer">
+                  {activeTab === 'gradcam' && results.gradcam_heatmap_base64 ? (
+                    <img
+                      src={`data:image/jpeg;base64,${results.gradcam_heatmap_base64}`}
+                      alt="Grad-CAM Activation"
+                    />
+                  ) : (
+                    <img src={previewUrl} alt="Original Leaf" />
+                  )}
+                  <span className="image-viewer-badge">
+                    {activeTab === 'gradcam' ? '🔥 Heatmap (Whole Leaf)' : '🍃 Full Specimen'}
+                  </span>
+                </div>
+              )}
 
               {/* Confidence Progress Bar */}
               <div className="confidence-box">
