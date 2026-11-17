@@ -46,7 +46,52 @@ This project is trained and evaluated on the **PlantVillage Dataset**, containin
 
 ---
 
-## ⚙️ 4. How the System Works
+## 🏗️ 4. System Architecture & Workflow
+
+<div align="center">
+  <img src="assets/architecture_diagram.svg" alt="AgriVision System Architecture" width="100%" />
+</div>
+
+### Interactive Architecture Workflow
+
+```mermaid
+flowchart TD
+    subgraph UI["1. Client Layer (Multi-Platform)"]
+        Mobile["📱 Mobile App (React Native / Expo 58)<br/>• 3-Slot Multi-Angle Scanner<br/>• Microclimate Telemetry<br/>• Post-Scan Triage Questionnaire<br/>• Farmer Support Desk"]
+        Web["💻 Web Dashboard (React 18 / Vite)<br/>• Drag & Drop Leaf Upload<br/>• 1-Click Benchmark Demos<br/>• Grad-CAM Heatmap Slider<br/>• Real-Time Latency Meter"]
+    end
+
+    subgraph API["2. Gateway & Microservice Layer"]
+        FastAPI["⚡ FastAPI REST Server (Uvicorn / Port 8000)<br/>• Endpoint: /predict (Single + Grad-CAM)<br/>• Endpoint: /predict-batch (3-Leaf Ensemble)<br/>• Endpoint: /validate-leaf (Quality Gate)<br/>• Auto Swagger UI: /docs"]
+    end
+
+    subgraph CV["3. Computer Vision & Preprocessing Pipeline"]
+        QualityGate["🔍 Image Quality Gate<br/>• Laplacian Variance (> 100 for Blur)<br/>• Brightness Histogram (40 - 225)<br/>• HSV Leaf Tissue Detection (> 15% green/brown)"]
+        Preprocess["⚙️ Tensor Preprocessing<br/>• Resizing to 224x224<br/>• ImageNet Standardization (mean/std)<br/>• Optional HSV/Otsu ROI Masking"]
+    end
+
+    subgraph DL["4. Deep Learning & Explainability Engine"]
+        MobileNet["🧠 MobileNetV3-Large Backbone<br/>• Squeeze-and-Excitation (SE) Attention<br/>• Hard-Swish Activation Functions<br/>• 15 Plant Disease Classes (98.87% Val Acc)"]
+        GradCAM["🔥 Grad-CAM XAI Engine<br/>• Backprop gradients to features[16]<br/>• Heatmap overlay over diseased tissue"]
+    end
+
+    subgraph Action["5. Agro-Intelligence & Decision Support"]
+        Weather["⛅ Open-Meteo Weather API<br/>• GPS Microclimate Telemetry<br/>• Humidity/Temp Outbreak Risk Matrix"]
+        Remedies["💊 Agronomic Prescription Engine<br/>• 5-Step Triage Questionnaire<br/>• Dosage Adjustment & Kisan Helpline (1800-180-1551)"]
+    end
+
+    UI -->|"Multipart / Base64"| API
+    API --> CV
+    QualityGate -->|"Passed"| Preprocess
+    Preprocess --> DL
+    MobileNet --> GradCAM
+    DL --> API
+    API --> UI
+    UI <--> Weather
+    UI --> Remedies
+```
+
+### High-Level Diagnostic Flow
 
 ```
 [ Leaf Photograph ]

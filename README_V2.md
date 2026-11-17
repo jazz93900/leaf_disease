@@ -46,6 +46,12 @@
 
 ## 🏗️ 2. End-to-End System Architecture
 
+<div align="center">
+  <img src="assets/architecture_diagram.svg" alt="AgriVision System Architecture" width="100%" />
+</div>
+
+### Interactive Architecture Workflow
+
 ```mermaid
 flowchart TD
     subgraph Clients["1. Multi-Platform User Interfaces"]
